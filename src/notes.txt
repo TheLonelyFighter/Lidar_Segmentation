@@ -1,0 +1,3 @@
+1) Take a look at KDTrees to organize point cloud and process it
+2) what is range image? -> https://pcl.readthedocs.io/projects/tutorials/en/latest/range_image_visualization.html#range-image-visualization
+3) Extract ground simple segmentation -> https://pcl.readthedocs.io/projects/tutorials/en/latest/planar_segmentation.html#planar-segmentation
