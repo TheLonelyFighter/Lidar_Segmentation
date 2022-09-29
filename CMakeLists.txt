@@ -35,5 +35,6 @@ target_link_libraries (rot_and_trans ${PCL_LIBRARIES})
 add_executable (simple_visual src/simple_visual.cpp)
 target_link_libraries (simple_visual ${PCL_LIBRARIES})
 
-add_executable (pcl_visualizer_demo src/pcl_visualizer_demo.cpp)
-target_link_libraries (pcl_visualizer_demo ${PCL_LIBRARIES})
+add_executable (planar_segmentation src/planar_segmentation.cpp)
+target_link_libraries (planar_segmentation ${PCL_LIBRARIES})
+
