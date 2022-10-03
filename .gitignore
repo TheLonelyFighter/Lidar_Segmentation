@@ -1,0 +1,5 @@
+/pcd_files
+.vscode/
+build/
+papers/
+rosbags_avia_hevonlinna/
