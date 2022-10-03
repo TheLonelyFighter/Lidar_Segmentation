@@ -19,8 +19,12 @@ project(pcd_read)
 
 find_package(PCL 1.2 REQUIRED)
 
-include_directories(${PCL_INCLUDE_DIRS})
-link_directories(${PCL_LIBRARY_DIRS})
+
+# SET (YOUR_DIRECTORY "/src")
+# target_include_directories(test PRIVATE ${YOUR_DIRECTORY})
+
+include_directories(${PCL_INCLUDE_DIRS} src)
+link_directories(${PCL_LIBRARY_DIRS} src)
 add_definitions(${PCL_DEFINITIONS})
 
 add_executable (pcd_read src/pcd_read.cpp)
@@ -38,3 +42,5 @@ target_link_libraries (simple_visual ${PCL_LIBRARIES})
 add_executable (planar_segmentation src/planar_segmentation.cpp)
 target_link_libraries (planar_segmentation ${PCL_LIBRARIES})
 
+add_executable (model_outlier_removal src/model_outlier_removal.cpp src/utils.h src/utils.cpp)
+target_link_libraries (model_outlier_removal ${PCL_LIBRARIES} )
