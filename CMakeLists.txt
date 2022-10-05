@@ -44,3 +44,9 @@ target_link_libraries (planar_segmentation ${PCL_LIBRARIES})
 
 add_executable (model_outlier_removal src/model_outlier_removal.cpp src/utils.h src/utils.cpp)
 target_link_libraries (model_outlier_removal ${PCL_LIBRARIES} )
+
+add_executable (range_image_creation src/range_image_creation.cpp)
+target_link_libraries (range_image_creation ${PCL_LIBRARIES})
+
+add_executable (range_image_visualization src/range_image_visualization.cpp)
+target_link_libraries (range_image_visualization ${PCL_LIBRARIES})

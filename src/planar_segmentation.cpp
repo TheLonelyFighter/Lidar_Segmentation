@@ -29,21 +29,12 @@ int
   pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
   pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_plane(new pcl::PointCloud<pcl::PointXYZ>);
 
-  // Fill in the cloud data
-  // cloud->width  = 15;
-  // cloud->height = 1;
-  // cloud->points.resize (cloud->width * cloud->height);
 
-  // Generate the data
-  // for (auto& point: *cloud)
-  // {
-  //   point.x = 1024 * rand () / (RAND_MAX + 1.0f);
-  //   point.y = 1024 * rand () / (RAND_MAX + 1.0f);
-  //   point.z = 1.0;
-  // }
-
-  // Load the data
-  if (pcl::io::loadPCDFile<pcl::PointXYZ> ("../pcd_files/rosbag_6.pcd", *cloud) == -1) //* load the file
+  //For some reason which I am not aware of atm, this code works best for rosbag_5.pcd
+  //This segmentation alg is very simple and cannot differentiate between different ground elevation
+  //
+  // Load the pcd file
+  if (pcl::io::loadPCDFile<pcl::PointXYZ> ("../pcd_files/rosbag_5.pcd", *cloud) == -1) //* load the file
 
   {
     PCL_ERROR ("Couldn't read file test_pcd.pcd \n");
@@ -74,7 +65,7 @@ int
   // Mandatory
   seg.setModelType (pcl::SACMODEL_PLANE);
   seg.setMethodType (pcl::SAC_RANSAC);
-  seg.setDistanceThreshold (0.01);
+  seg.setDistanceThreshold (1.0);
 
   seg.setInputCloud (cloud);
   seg.segment (*inliers, *coefficients);
