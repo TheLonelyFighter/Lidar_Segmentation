@@ -1,3 +1,8 @@
 1) Take a look at KDTrees to organize point cloud and process it
 2) what is range image? -> https://pcl.readthedocs.io/projects/tutorials/en/latest/range_image_visualization.html#range-image-visualization
 3) Extract ground simple segmentation -> https://pcl.readthedocs.io/projects/tutorials/en/latest/planar_segmentation.html#planar-segmentation
+
+
+4) Extract trees by checking density of small point cloud subsets.
+5) Use voxels to downsample point cloud and make processing faster.
+6) Project segmented ground and trees on XoY plane and output range image or photo for path planner.
