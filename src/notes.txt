@@ -6,3 +6,7 @@
 4) Extract trees by checking density of small point cloud subsets.
 5) Use voxels to downsample point cloud and make processing faster.
 6) Project segmented ground and trees on XoY plane and output range image or photo for path planner.
+
+7) Use the segmented ground as a reference to determine the Z axis of the point cloud. The normal to the ground plane is the Z axis.
+8) Check the height of the points on the Z axis with KDTrees to determine if they are from trees or not.
+9) 

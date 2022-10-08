@@ -41,6 +41,7 @@ int
     return (-1);
   }
 
+  std::cout << "This is a test" << std::endl;
 
   std::cout << "Point cloud BEFORE segmentation" << std::endl;
   plot_point_cloud(cloud);
