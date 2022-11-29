@@ -44,7 +44,7 @@ int
   std::cout << "This is a test" << std::endl;
 
   std::cout << "Point cloud BEFORE segmentation" << std::endl;
-  plot_point_cloud(cloud);
+  //plot_point_cloud(cloud);
 
   // Set a few outliers
   // (*cloud)[0].z = 2.0;
@@ -66,7 +66,7 @@ int
   // Mandatory
   seg.setModelType (pcl::SACMODEL_PLANE);
   seg.setMethodType (pcl::SAC_RANSAC);
-  seg.setDistanceThreshold (1.0);
+  seg.setDistanceThreshold (0.5);
 
   seg.setInputCloud (cloud);
   seg.segment (*inliers, *coefficients);
@@ -84,7 +84,7 @@ int
 
   pcl::ModelOutlierRemoval<pcl::PointXYZ> plane_filter;
   plane_filter.setModelCoefficients (*coefficients);
-  plane_filter.setThreshold (1.0);
+  plane_filter.setThreshold (0.5);
   plane_filter.setModelType (pcl::SACMODEL_PLANE);
   plane_filter.setInputCloud (cloud);
   plane_filter.filter (*filtered_plane);
@@ -97,7 +97,7 @@ int
   //                              << cloud->points[idx].z << std::endl;
 
   
-  plot_point_cloud(filtered_plane);
+  //plot_point_cloud(filtered_plane);
 
   // Visualization
   printf(  "\nPoint cloud colors :  white  = original point cloud\n"
@@ -105,11 +105,11 @@ int
   pcl::visualization::PCLVisualizer viewer ("Matrix transformation example");
 
    // Define R,G,B colors for the point cloud
-  pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> source_cloud_color_handler (cloud, 255, 255, 255);
+  pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> source_cloud_color_handler (cloud, 128,0,0);
   // We add the point cloud to the viewer and pass the color handler
   viewer.addPointCloud (cloud, source_cloud_color_handler, "original_cloud");
 
-  pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_handler (filtered_plane, 230, 20, 20); // Red
+  pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_handler (filtered_plane, 128, 0, 128); // Red
   viewer.addPointCloud (filtered_plane, transformed_cloud_color_handler, "transformed_cloud");
 
   viewer.addCoordinateSystem (1.0, "cloud", 0);
@@ -118,6 +118,9 @@ int
   viewer.setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, "transformed_cloud");
   //viewer.setPosition(800, 400); // Setting visualiser window position
 
+  viewer.saveCameraParameters("camera_params.txt");
+  viewer.setCameraPosition(-200, 0, 0, 0, 0, 0, 0); // parameters measured in meters
+  viewer.saveScreenshot("../results/screenshot_seg.png");
   while (!viewer.wasStopped ()) { // Display the visualiser until 'q' key is pressed
     viewer.spinOnce ();
   }
