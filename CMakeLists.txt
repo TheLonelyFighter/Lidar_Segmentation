@@ -54,4 +54,7 @@ target_link_libraries (planar_segmentation ${PCL_LIBRARIES})
 # add_executable (surface_normal src/surface_normal.cpp)
 # target_link_libraries (surface_normal ${PCL_LIBRARIES})
 
+add_executable (kdtree_search src/kdtree_search.cpp)
+target_link_libraries (kdtree_search ${PCL_LIBRARIES})
+
 

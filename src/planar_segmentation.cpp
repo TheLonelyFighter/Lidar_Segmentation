@@ -7,15 +7,18 @@
 #include <pcl/segmentation/sac_segmentation.h>
 #include <pcl/visualization/cloud_viewer.h>
 #include <pcl/filters/model_outlier_removal.h>
+#include <pcl/filters/extract_indices.h>
+#include <pcl/surface/convex_hull.h>
+#include <pcl/segmentation/extract_polygonal_prism_data.h>
 
 
 
 
 void
- plot_point_cloud (pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
+ plot_point_cloud (pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, std::string plot_name)
  {
    
-   pcl::visualization::CloudViewer viewer ("Simple Cloud Viewer");
+   pcl::visualization::CloudViewer viewer (plot_name);
    viewer.showCloud (cloud);
    while (!viewer.wasStopped ())
    {
@@ -27,7 +30,9 @@ int
  main (int argc, char** argv)
 {
   pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);
-  pcl::PointCloud<pcl::PointXYZ>::Ptr filtered_plane(new pcl::PointCloud<pcl::PointXYZ>);
+  pcl::PointCloud<pcl::PointXYZ>::Ptr ground_plane(new pcl::PointCloud<pcl::PointXYZ>);
+  pcl::PointCloud<pcl::PointXYZ>::Ptr objects(new pcl::PointCloud<pcl::PointXYZ>);
+  pcl::PointCloud<pcl::PointXYZ>::Ptr convexHull(new pcl::PointCloud<pcl::PointXYZ>);
 
 
   //For some reason which I am not aware of atm, this code works best for rosbag_5.pcd
@@ -44,7 +49,7 @@ int
   std::cout << "This is a test" << std::endl;
 
   std::cout << "Point cloud BEFORE segmentation" << std::endl;
-  //plot_point_cloud(cloud);
+  plot_point_cloud(cloud);
 
   // Set a few outliers
   // (*cloud)[0].z = 2.0;
@@ -87,17 +92,15 @@ int
   plane_filter.setThreshold (0.5);
   plane_filter.setModelType (pcl::SACMODEL_PLANE);
   plane_filter.setInputCloud (cloud);
-  plane_filter.filter (*filtered_plane);
+  plane_filter.filter (*ground_plane); //contains oly the segmented ground plane
 
-  std::cerr << "Model inliers: " << inliers->indices.size () << std::endl;
-  //for (std::size_t i = 0; i < inliers->indices.size (); ++i)
-  // for (const auto& idx: inliers->indices)
-  //   std::cerr << idx << "    " << cloud->points[idx].x << " "
-  //                              << cloud->points[idx].y << " "
-  //                              << cloud->points[idx].z << std::endl;
+  plane_filter.setNegative (true);
+  plane_filter.filter(*objects); //contains only the objects
 
   
-  //plot_point_cloud(filtered_plane);
+	plot_point_cloud(objects, "Objects");
+  
+  plot_point_cloud(ground_plane, "Ground Plane");
 
   // Visualization
   printf(  "\nPoint cloud colors :  white  = original point cloud\n"
@@ -109,8 +112,8 @@ int
   // We add the point cloud to the viewer and pass the color handler
   viewer.addPointCloud (cloud, source_cloud_color_handler, "original_cloud");
 
-  pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_handler (filtered_plane, 128, 0, 128); // Red
-  viewer.addPointCloud (filtered_plane, transformed_cloud_color_handler, "transformed_cloud");
+  pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> transformed_cloud_color_handler (ground_plane, 128, 0, 128); // Red
+  viewer.addPointCloud (ground_plane, transformed_cloud_color_handler, "transformed_cloud");
 
   viewer.addCoordinateSystem (1.0, "cloud", 0);
   viewer.setBackgroundColor(0.05, 0.05, 0.05, 0); // Setting background to a dark grey
