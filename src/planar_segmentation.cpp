@@ -49,7 +49,7 @@ int
   std::cout << "This is a test" << std::endl;
 
   std::cout << "Point cloud BEFORE segmentation" << std::endl;
-  plot_point_cloud(cloud);
+  plot_point_cloud(cloud, "Point cloud BEFORE segmentation");
 
   // Set a few outliers
   // (*cloud)[0].z = 2.0;
@@ -105,7 +105,7 @@ int
   // Visualization
   printf(  "\nPoint cloud colors :  white  = original point cloud\n"
       "                        red  = transformed point cloud\n");
-  pcl::visualization::PCLVisualizer viewer ("Matrix transformation example");
+  pcl::visualization::PCLVisualizer viewer ("Segmented point cloud");
 
    // Define R,G,B colors for the point cloud
   pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> source_cloud_color_handler (cloud, 128,0,0);
