@@ -27,8 +27,8 @@ include_directories(${PCL_INCLUDE_DIRS} src)
 link_directories(${PCL_LIBRARY_DIRS} src)
 add_definitions(${PCL_DEFINITIONS})
 
-# add_executable (pcd_read src/pcd_read.cpp)
-# target_link_libraries (pcd_read ${PCL_LIBRARIES})
+add_executable (pcd_read src/pcd_read.cpp)
+target_link_libraries (pcd_read ${PCL_LIBRARIES})
 
 # add_executable (pcd_write src/pcd_write.cpp)
 # target_link_libraries (pcd_write ${PCL_LIBRARIES})
@@ -57,7 +57,14 @@ target_link_libraries (planar_segmentation ${PCL_LIBRARIES})
 # add_executable (kdtree_search src/kdtree_search.cpp)
 # target_link_libraries (kdtree_search ${PCL_LIBRARIES})
 
-add_executable (octree_search src/octree_search.cpp)
-target_link_libraries (octree_search ${PCL_LIBRARIES})
+# add_executable (octree_search src/octree_search.cpp)
+# target_link_libraries (octree_search ${PCL_LIBRARIES})
+
+# add_executable (octree_change_detection src/octree_change_detection.cpp)
+# target_link_libraries (octree_change_detection ${PCL_LIBRARIES})
+
+
+add_executable (supervoxel_clustering src/supervoxel_clustering.cpp)
+target_link_libraries (supervoxel_clustering ${PCL_LIBRARIES})
 
 
